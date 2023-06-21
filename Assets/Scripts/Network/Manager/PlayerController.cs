@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     [Header("Move Settings")]
-    public float m_Speed = 12f;
+    public float m_Speed = 1200f;
     public float m_TurnSpeed = 180f;
     public AudioSource m_MovementAudio;
     public AudioClip m_EngineIdling;
@@ -136,9 +136,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private void Move()
     {
         // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-        Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+        Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime; 
         // Apply this movement to the rigidbody's position.
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        m_Rigidbody.velocity = movement;
 
         //transform.Translate(Vector3.forward * m_MovementInputValue * m_Speed * Time.deltaTime);
     }

@@ -62,6 +62,7 @@ public class PUN_manager : MonoBehaviourPunCallbacks
         else pos = m_SpawnPoint_2.position;
 
         GameObject go = PhotonNetwork.Instantiate(m_TankPrefab.name, pos, Quaternion.identity, 0);
+        
         camera.GetComponent<SmoothFollow>().target = go.transform;
     }
 
