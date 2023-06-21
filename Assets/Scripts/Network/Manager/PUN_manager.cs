@@ -13,6 +13,8 @@ public class PUN_manager : MonoBehaviourPunCallbacks
     public Transform m_SpawnPoint_1;
     public Transform m_SpawnPoint_2;
 
+    public CameraControl m_CameraControl;
+
     [SerializeField]
     private TextMeshProUGUI textStatus;
 
