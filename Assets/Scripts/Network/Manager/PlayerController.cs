@@ -51,16 +51,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private AudioSource m_ExplosionAudio;               // The audio source to play when the tank explodes.
     private ParticleSystem m_ExplosionParticles;        // The particle system the will play when the tank is destroyed.
-    private float m_CurrentHealth;                      // How much health the tank currently has.
+    public float m_CurrentHealth;                      // How much health the tank currently has.
     private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
 
-    [SerializeField]
     private GameObject m_CanvasGameObject;
 
     public GameObject m_Instance;
 
 
-    private PhotonView view;
+    public PhotonView view;
 
 
     private void Awake()
@@ -266,8 +265,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // Turn the tank off.
         gameObject.SetActive(false);
-    }
 
+        Game_Manager.Instance.loseMessage.gameObject.SetActive(true);
+        view.RPC("GameWin", RpcTarget.Others);
+    }
+    #region RPC METHOD
     [PunRPC]
     private void RPC_Fire()
     {
@@ -287,8 +289,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // Reset the launch force.  This is a precaution in case of missing button events.
         m_CurrentLaunchForce = m_MinLaunchForce;
-
-        Debug.Log("Ban tum lum");
     }
+
+    [PunRPC]
+    private void RPC_SetHealthUI(float m_health)
+    {
+        // Set the slider's value appropriately.
+        m_Slider.value = m_health;
+
+        // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
+        m_FillImage.color = Color.Lerp(m_ZeroHealthColor, m_FullHealthColor, m_health / m_StartingHealth);
+
+    }
+    [PunRPC]
+    private void GameWin()
+    {
+        Game_Manager.Instance.winMessage.gameObject.SetActive(true);
+    }
+    #endregion
 
 }

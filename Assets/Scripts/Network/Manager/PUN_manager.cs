@@ -13,10 +13,17 @@ public class PUN_manager : MonoBehaviourPunCallbacks
     public Transform m_SpawnPoint_1;
     public Transform m_SpawnPoint_2;
 
+
+    public List<Transform> spawners;
+
     public CameraControl m_CameraControl;
 
     [SerializeField]
     private TextMeshProUGUI textStatus;
+
+    private int m_RoundNumber;
+    private WaitForSeconds m_StartWait;
+    private WaitForSeconds m_EndWait;
 
     public Camera camera;
 
@@ -57,13 +64,25 @@ public class PUN_manager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Vector3 pos;
-        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
-            pos = m_SpawnPoint_1.position;
-        else pos = m_SpawnPoint_2.position;
-
-        GameObject go = PhotonNetwork.Instantiate(m_TankPrefab.name, pos, Quaternion.identity, 0);
         
-        camera.GetComponent<SmoothFollow>().target = go.transform;
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        {
+            pos = m_SpawnPoint_1.position;
+            SpawnPlayer(pos);
+            //Game_Manager.Instance.waitingMessage.gameObject.SetActive(false);
+        }
+        else
+        {
+            pos = m_SpawnPoint_2.position;
+            SpawnPlayer(pos);
+            //Game_Manager.Instance.waitingMessage.gameObject.SetActive(true);
+            //Game_Manager.Instance.waitingMessage.text = "Wait another player";
+        }
     }
 
+    private void SpawnPlayer(Vector3 pos)
+    {
+        GameObject go = PhotonNetwork.Instantiate(m_TankPrefab.name, pos, Quaternion.identity, 0);
+        camera.GetComponent<SmoothFollow>().target = go.transform;
+    }
 }

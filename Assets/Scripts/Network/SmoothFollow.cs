@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
-
 	// The target we are following
 	[SerializeField]
 	public Transform target;
 	// The distance in the x-z plane to the target
 	[SerializeField]
-	public float distance;//= 10.0f;
-						  // the height we want the camera to be above the target
+	public float distance = 10.0f;
+	// the height we want the camera to be above the target
 	[SerializeField]
-	public float height;// = 5.0f;
+	public float height = 10.0f;
 
 	[SerializeField]
 	private float rotationDamping;

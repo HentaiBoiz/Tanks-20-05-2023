@@ -2,6 +2,7 @@
 using System.Collections;
 //using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,10 +10,9 @@ public class GameManager : MonoBehaviour
     public float m_StartDelay = 3f;         
     public float m_EndDelay = 3f;           
     public CameraControl m_CameraControl;   
-    public Text m_MessageText;              
-    public GameObject m_TankPrefab;         
-    public TankManager[] m_Tanks;           
-
+    public TextMeshProUGUI m_MessageText;              
+    public GameObject m_TankPrefab;
+    public PlayerController[] m_Tanks;
 
     private int m_RoundNumber;              
     private WaitForSeconds m_StartWait;     
@@ -38,9 +38,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_Tanks.Length; i++)
         {
             m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-            m_Tanks[i].m_PlayerNumber = i + 1;
-            m_Tanks[i].Setup();
+                Instantiate(m_TankPrefab, m_Tanks[i].transform) as GameObject;
+            
         }
     }
 
@@ -152,29 +151,29 @@ public class GameManager : MonoBehaviour
     }
 */
 
-    private void ResetAllTanks()
-    {
-        for (int i = 0; i < m_Tanks.Length; i++)
-        {
-            m_Tanks[i].Reset();
-        }
-    }
+    //private void ResetAllTanks()
+    //{
+    //    for (int i = 0; i < m_Tanks.Length; i++)
+    //    {
+    //        m_Tanks[i].Reset();
+    //    }
+    //}
 
 
-    private void EnableTankControl()
-    {
-        for (int i = 0; i < m_Tanks.Length; i++)
-        {
-            m_Tanks[i].EnableControl();
-        }
-    }
+    //private void EnableTankControl()
+    //{
+    //    for (int i = 0; i < m_Tanks.Length; i++)
+    //    {
+    //        m_Tanks[i].EnableControl();
+    //    }
+    //}
 
 
-    private void DisableTankControl()
-    {
-        for (int i = 0; i < m_Tanks.Length; i++)
-        {
-            m_Tanks[i].DisableControl();
-        }
-    }
+    //private void DisableTankControl()
+    //{
+    //    for (int i = 0; i < m_Tanks.Length; i++)
+    //    {
+    //        m_Tanks[i].DisableControl();
+    //    }
+    //}
 }
