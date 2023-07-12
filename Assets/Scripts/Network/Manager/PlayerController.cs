@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Turn();
     }
 
+    #region Tank Movement
     private void Move()
     {
         // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
        //transform.Rotate(Vector3.up * m_TurnInputValue * m_Speed * Time.deltaTime * 20);
     }
-
+    
     private void EngineAudio()
     {
         // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
@@ -183,7 +184,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
     }
+    #endregion
 
+    #region Tank Shooting 
     private void Fire() {
         // The slider should have a default value of the minimum launch force.
         m_AimSlider.value = m_MinLaunchForce;
@@ -221,7 +224,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
             view.RPC("RPC_Fire", RpcTarget.All);
         }
     }
+    #endregion
 
+    #region Tank HP
     public void TakeDamage(float amount)
     {
         // Reduce current health by the amount of damage done.
@@ -267,8 +272,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         gameObject.SetActive(false);
 
         Game_Manager.Instance.loseMessage.gameObject.SetActive(true);
+        Game_Manager.Instance.btnRestart.gameObject.SetActive(true);
         view.RPC("GameWin", RpcTarget.Others);
     }
+    #endregion
+
     #region RPC METHOD
     [PunRPC]
     private void RPC_Fire()
@@ -305,6 +313,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private void GameWin()
     {
         Game_Manager.Instance.winMessage.gameObject.SetActive(true);
+        Game_Manager.Instance.btnRestart.gameObject.SetActive(true);
     }
     #endregion
 
